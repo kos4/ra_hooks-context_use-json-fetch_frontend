@@ -1,25 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import {useJsonFetch} from "./hooks/useJsonFetch";
 
-function App() {
+export default function App() {
+  const DataComp = () => {
+    const hook = useJsonFetch('http://localhost:7070/data');
+    return (
+      <div>
+        <b>Status get data:</b> {hook.data && JSON.stringify(hook.data)}
+      </div>
+    )
+  }
+
+  const ErrorComp = () => {
+    const hook = useJsonFetch('http://localhost:7070/error');
+    return (
+      <div>
+        <b>Error status:</b> {hook.error && JSON.stringify(hook.error)}
+      </div>
+    )
+  }
+
+  const LoadingComp = () => {
+    const hook = useJsonFetch('http://localhost:7070/loading');
+    return (
+      <div>
+        <b>Loading status:</b> {hook.loading && <>Loading...</>}
+      </div>
+    )
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <DataComp/>
+      <ErrorComp/>
+      <LoadingComp/>
     </div>
   );
 }
-
-export default App;
